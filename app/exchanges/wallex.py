@@ -10,7 +10,7 @@ async def get_price(session: aiohttp.ClientSession, symbol: str) -> Ticker:
     t0 = time.perf_counter()
     async with session.get(f"{BASE}/v1/markets") as resp:
         data = await resp.json()
-    latency_ms = (time.perf_counter() - t0) * 1000
+    latency_ms = (time.perf_counter() - t0)
 
 
     info = data["result"]["symbols"][sym]

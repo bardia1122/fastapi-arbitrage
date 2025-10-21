@@ -1,4 +1,3 @@
-# app/core/metrics.py
 from prometheus_client import Counter, Histogram, Gauge, CONTENT_TYPE_LATEST, generate_latest
 from starlette.responses import Response
 
@@ -26,6 +25,11 @@ LAST_DIFF = Gauge(
     ["symbol"],
 )
 
+ARBITRAGE_VALUE = Gauge(
+    "arbitrage_last_diff_value",
+    "مقدار اختلاف قیمتی آخرین آربیتراژ کشف‌شده برای هر جفت ارز",
+    ["symbol"],
+)
 
 def metrics_endpoint():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)

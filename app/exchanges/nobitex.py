@@ -11,7 +11,7 @@ async def get_price(session: aiohttp.ClientSession, symbol: str) -> Ticker:
     t0 = time.perf_counter()
     async with session.get(f"{BASE}/v3/orderbook/{sym}", headers={"User-Agent": USER_AGENT}) as resp:
         data = await resp.json()
-    latency_ms = (time.perf_counter() - t0) * 1000
+    latency_ms = (time.perf_counter() - t0)
 
     last_trade = float(data.get("lastTradePrice"))
     return {"symbol": symbol, "price": last_trade, "exchange": "nobitex", "latency_ms": latency_ms}

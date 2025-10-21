@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.settings import settings
 from app.exchanges import nobitex, wallex
 from app.db import crud, models
-from app.core.metrics import EXCHANGE_LATENCY, EXCHANGE_REQUESTS, ARBITRAGE_EVENTS, LAST_DIFF
+from app.core.metrics import EXCHANGE_LATENCY, EXCHANGE_REQUESTS, ARBITRAGE_EVENTS, LAST_DIFF, ARBITRAGE_VALUE
 from app.core.telegram import send_message
 
 EX_MAP = {"nobitex": nobitex.get_price, "wallex": wallex.get_price}
@@ -67,6 +67,8 @@ async def scan_once(db: AsyncSession) -> int:
 
         if diff_pct >= settings.PROFIT_PCT_THRESHOLD:
             ARBITRAGE_EVENTS.labels(sym).inc()
+            ARBITRAGE_VALUE.labels(sym).set(diff_abs)
+            
             found += 1
 
             await crud.insert_opportunity(
@@ -87,7 +89,7 @@ async def scan_once(db: AsyncSession) -> int:
                 f"• Sell @{sell_ex}: {sell_price:,.2f}\n"
                 f"• Diff: {diff_abs:,.2f} ({diff_pct:.2f}%)"
             )
-            await send_message(msg)
+            await   (msg)
 
         print(
             f"[DEBUG] {sym} → Raw: {mp} | Normalized: {normalized} | "

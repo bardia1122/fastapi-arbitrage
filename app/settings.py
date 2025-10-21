@@ -2,21 +2,22 @@ from pydantic import AnyHttpUrl
 from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
-class Settings(BaseSettings):
-    APP_NAME: str = "Arbitrage Service"
-    API_PREFIX: str = "/api"
-    HOST: str = "0.0.0.0"
-    PORT: int = 8000
-    DEBUG: bool = False
 
-    SYMBOLS: List[str] = ["USDT-IRT", "BTC-USDT"]
+class Settings(BaseSettings):
+    APP_NAME: str = os.getenv("APP_NAME", "Arbitrage Service")
+    API_PREFIX: str = os.getenv("API_PREFIX")
+    HOST: str = os.getenv("HOST")
+    PORT: int = int(os.getenv("PORT"))
+    DEBUG: bool = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
+
+    SYMBOLS: List[str] = os.getenv("SYMBOLS", "USDT-IRT,BTC-USDT").split(",")
     SCAN_INTERVAL_SEC: int = int(os.getenv("SCAN_INTERVAL_SEC", 7))
     PROFIT_PCT_THRESHOLD: float = float(os.getenv("PROFIT_PCT_THRESHOLD", 0.5))
 
     TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
     TELEGRAM_CHAT_ID: str = os.getenv("TELEGRAM_CHAT_ID", "")
 
-    DATABASE_URL: str = "postgresql+asyncpg://user:pass@localhost:5432/arb"
+    DATABASE_URL: str = os.getenv("DATABASE_URL")
 
     CORS_ORIGINS: List[AnyHttpUrl] = []
 
