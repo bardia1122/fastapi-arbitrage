@@ -1,0 +1,40 @@
+# Python specific
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# FastAPI specific
+*.db
+instance/
+*.sqlite3
+
+# Environment variables
+.env
+.env.*
+
+# Grafana and Prometheus
+grafana/data/
+prometheus/data/
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# OS generated files
+.DS_Store
+Thumbs.db

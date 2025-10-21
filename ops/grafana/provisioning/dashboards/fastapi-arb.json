@@ -1,0 +1,84 @@
+{
+    "id": null,
+    "uid": "arb-required",
+    "title": "Arbitrage Service - Required Metrics",
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "type": "timeseries",
+        "title": "⏱ Exchange Response Time (s)",
+        "datasource": "Prometheus",
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 },
+        "targets": [
+          {
+            "expr": "avg(rate(exchange_response_time_seconds_sum[5m]) / rate(exchange_response_time_seconds_count[5m])) by (exchange)",
+            "legendFormat": "{{exchange}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": { "unit": "s", "min": 0 },
+          "overrides": []
+        }
+      },
+      {
+        "type": "bargauge",
+        "title": "📊 Exchange Requests (ok/error)",
+        "datasource": "Prometheus",
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 },
+        "targets": [
+          {
+            "expr": "rate(exchange_requests_total[5m])",
+            "legendFormat": "{{exchange}} ({{status}})",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "lcd",
+          "reduceOptions": { "calcs": ["lastNotNull"] }
+        }
+      },
+      {
+        "type": "stat",
+        "title": "🚀 Arbitrage Events per Symbol (5m)",
+        "datasource": "Prometheus",
+        "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 },
+        "targets": [
+          {
+            "expr": "sum(increase(arbitrage_events_total[5m])) by (symbol)",
+            "legendFormat": "{{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": { "calcs": ["sum"] },
+          "orientation": "horizontal",
+          "textMode": "value_and_name"
+        }
+      },
+      {
+        "type": "timeseries",
+        "title": "💰 Last Diff Percent per Symbol",
+        "datasource": "Prometheus",
+        "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 },
+        "targets": [
+          {
+            "expr": "arbitrage_last_diff_percent",
+            "legendFormat": "{{symbol}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": { "unit": "percent", "min": 0 },
+          "overrides": []
+        }
+      }
+    ],
+    "time": { "from": "now-15m", "to": "now" },
+    "annotations": { "list": [] }
+  }
+  

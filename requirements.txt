@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+aiohttp
+SQLAlchemy>=2.0
+asyncpg
+prometheus-client
+python-dotenv
+pydantic>=2.6
+pydantic-settings>=2.3
