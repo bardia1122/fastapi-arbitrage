@@ -1,10 +1,10 @@
 {
   "id": null,
-  "uid": "arb-required",
-  "title": "Arbitrage Service - Required Metrics",
+  "uid": "arb-full",
+  "title": "Arbitrage Service - Full Metrics (App + DB)",
   "timezone": "browser",
   "schemaVersion": 38,
-  "version": 1,
+  "version": 2,
   "refresh": "5s",
   "panels": [
     {
@@ -80,8 +80,7 @@
         "defaults": {
           "unit": "short",
           "min": 0
-        },
-        "overrides": []
+        }
       }
     },
     {
@@ -105,8 +104,116 @@
         "defaults": {
           "unit": "percent",
           "min": 0
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "🟢 DB Up",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "expr": "pg_up",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bool",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "📈 Active Connections",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 6,
+        "y": 16,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "expr": "pg_stat_activity_count{datname!~\"template.*\"}",
+          "legendFormat": "{{datname}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "💾 DB Size (bytes)",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 12,
+        "y": 16,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "expr": "pg_database_size_bytes{datname!~\"template.*\"}",
+          "legendFormat": "{{datname}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "⚙️ Transactions Committed / Rolled Back",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 18,
+        "y": 16,
+        "w": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "expr": "rate(pg_stat_database_xact_commit{datname!~\"template.*\"}[5m])",
+          "legendFormat": "{{datname}} commit",
+          "refId": "A"
         },
-        "overrides": []
+        {
+          "expr": "rate(pg_stat_database_xact_rollback{datname!~\"template.*\"}[5m])",
+          "legendFormat": "{{datname}} rollback",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops"
+        }
       }
     }
   ],
