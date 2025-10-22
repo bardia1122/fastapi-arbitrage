@@ -24,8 +24,9 @@ services:
     image: adminer:4
     container_name: arb_adminer
     restart: unless-stopped
+    env_file: .env
     environment:
-      ADMINER_DEFAULT_SERVER: db
+      ADMINER_DEFAULT_SERVER: ${ADMINER_DEFAULT_SERVER}
     ports:
       - "8080:8080"
     depends_on:
@@ -64,9 +65,10 @@ services:
     image: grafana/grafana:11.1.0
     container_name: arb_grafana
     restart: unless-stopped
+    env_file: .env
     environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
       GF_USERS_DEFAULT_THEME: dark
     volumes:
       - grafana_data:/var/lib/grafana
