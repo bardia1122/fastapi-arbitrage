@@ -5,7 +5,8 @@ from app.settings import settings
 from app.exchanges import nobitex, wallex
 from app.db import crud, models
 from app.core.metrics import EXCHANGE_LATENCY, EXCHANGE_REQUESTS, ARBITRAGE_EVENTS, LAST_DIFF, ARBITRAGE_VALUE
-from app.core.telegram import send_message
+from app.core.telegram import send_message_telegram
+from app.core.bale import send_message_bale
 
 EX_MAP = {"nobitex": nobitex.get_price, "wallex": wallex.get_price}
 
@@ -89,7 +90,7 @@ async def scan_once(db: AsyncSession) -> int:
                 f"• Sell @{sell_ex}: {sell_price:,.2f}\n"
                 f"• Diff: {diff_abs:,.2f} ({diff_pct:.2f}%)"
             )
-            await   (msg)
+            await send_message_bale(msg)
 
         print(
             f"[DEBUG] {sym} → Raw: {mp} | Normalized: {normalized} | "
