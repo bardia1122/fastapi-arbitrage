@@ -16,6 +16,9 @@ class Settings(BaseSettings):
 
     TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
     TELEGRAM_CHAT_ID: str = os.getenv("TELEGRAM_CHAT_ID", "")
+    BALE_CHAT_ID: str = os.getenv("BALE_CHAT_ID", "")
+    BALE_BOT_TOKEN: str = os.getenv("BALE_BOT_TOKEN", "")
+
 
     DATABASE_URL: str = os.getenv("DATABASE_URL")
 

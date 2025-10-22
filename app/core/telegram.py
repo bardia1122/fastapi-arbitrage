@@ -1,7 +1,7 @@
 import aiohttp
 from app.settings import settings
 
-async def send_message(text: str) -> None:
+async def send_message_telegram(text: str) -> None:
     if not settings.TELEGRAM_BOT_TOKEN or not settings.TELEGRAM_CHAT_ID:
         return
     url = f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage"
