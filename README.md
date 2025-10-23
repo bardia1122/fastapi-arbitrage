@@ -145,6 +145,7 @@ TELEGRAM_BOT_TOKEN=<your_bot_token>
 TELEGRAM_CHAT_ID=<your_chat_id>
 BALE_BOT_TOKEN=<your_bale_token>
 BALE_CHAT_ID=<your_bale_chat_id>
+NOTIFY_CHANNEL=<your_preferred_bot> (telegram or bale)
 ```
 
 ### 3️⃣ Launch Containers
