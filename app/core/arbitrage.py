@@ -90,12 +90,12 @@ async def scan_once(db: AsyncSession) -> int:
                 f"• Sell @{sell_ex}: {sell_price:,.2f}\n"
                 f"• Diff: {diff_abs:,.2f} ({diff_pct:.2f}%)"
             )
-            await send_message_bale(msg)
-
-        print(
-            f"[DEBUG] {sym} → Raw: {mp} | Normalized: {normalized} | "
-            f"Buy={buy_ex}:{buy_price} Sell={sell_ex}:{sell_price} Diff={diff_pct:.2f}%"
-        )
+            if settings.NOTIFY_CHANNEL == "bale":
+                await send_message_bale(msg)
+            elif settings.NOTIFY_CHANNEL == "telegram":
+                await send_message_telegram(msg)
+            else:
+                print(f"[WARN] Unknown NOTIFY_CHANNEL: {settings.NOTIFY_CHANNEL}")
 
     return found
 
