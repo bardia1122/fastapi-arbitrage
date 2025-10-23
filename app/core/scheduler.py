@@ -18,7 +18,6 @@ class Scanner:
                     found = await scan_once(db)
             except Exception as e:
                 log.exception(f"Error in scanner loop: {e}")
-            # Wait before next iteration
             try:
                 await asyncio.wait_for(self._stop.wait(), timeout=settings.SCAN_INTERVAL_SEC)
             except asyncio.TimeoutError:

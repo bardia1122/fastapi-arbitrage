@@ -24,7 +24,6 @@ async def health():
 
 @router.get("/metrics")
 async def metrics():
-    # خروجی استاندارد Prometheus
     EXCHANGE_REQUESTS.labels("api", "ok").inc()
     return metrics_endpoint()
 
