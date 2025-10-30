@@ -37,9 +37,6 @@ async def get_opps(limit: int = 50, db: AsyncSession = Depends(get_db)):
 
 @router.post("/arbitrage/scan")
 async def force_scan(db: AsyncSession = Depends(get_db)):
-    """
-    اجرای دستی اسکن آربیتراژ (برای تست)
-    """
     n = await scan_once(db)
     EXCHANGE_REQUESTS.labels("api", "ok").inc()
     return {"found": n}
@@ -47,9 +44,6 @@ async def force_scan(db: AsyncSession = Depends(get_db)):
 
 @router.get("/prices")
 async def last_prices(symbol: Optional[str] = None, db: AsyncSession = Depends(get_db)):
-    """
-    دریافت آخرین قیمت‌ها از دیتابیس
-    """
     res = await crud.last_prices(db, symbol=symbol)
     EXCHANGE_REQUESTS.labels("api", "ok").inc()
     return [
