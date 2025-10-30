@@ -136,6 +136,10 @@ PORT=8000
 DEBUG=True
 
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/arbitrage
+POSTGRES_DB=arb
+POSTGRES_USER=arb
+POSTGRES_PASSWORD=arb
+DATABASE_URL=postgresql+asyncpg://arb:arb@db:5432/arb
 
 SYMBOLS=[USDT-IRT,BTC-USDT]
 SCAN_INTERVAL_SEC=7
